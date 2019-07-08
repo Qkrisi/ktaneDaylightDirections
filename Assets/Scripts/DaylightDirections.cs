@@ -248,24 +248,34 @@ public class DaylightDirections : MonoBehaviour {
     /// Twitch plays support created by Qkrisi
     /// </summary>
     public string TwitchHelpMessage = "Use '!{0} cw' to rotate clockwise! Use '!{0} ccw' to rotate counterclockwise! Use '!{0} submit' to press the submit button!";
+    private readonly WaitForSeconds wait = new WaitForSeconds(0.1f);
     IEnumerator ProcessTwitchCommand(string command)
     {
 		string commfinal=command.Replace("press ", "");
 		string[] digitstring = commfinal.Split(' ');
 		foreach(string option in digitstring){
-			if(option=="cw"){
+            yield return null;
+			if(option=="cw")
+            {
 				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; clockwise button pressed.", moduleId, option);
 				yield return clockwiseButton;
-			}
-			if(option=="ccw"){
+                yield return wait;
+                yield return clockwiseButton;
+            }
+			else if(option=="ccw")
+            {
 				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; counterclockwise button pressed.", moduleId, option);
 				yield return counterClockwiseButton;
-			}
-			if(option=="submit"){
+                yield return wait;
+                yield return counterClockwiseButton;
+            }
+			else if(option=="submit")
+            {
 				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; submit button pressed.", moduleId, option);
 				yield return submitButton;
-			}
-			
+                yield return wait;
+                yield return submitButton;
+            }
 		}
 	}
 }
