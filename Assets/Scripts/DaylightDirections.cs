@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -243,4 +243,26 @@ public class DaylightDirections : MonoBehaviour {
             Debug.LogFormat(@"[Daylight Directions #{0}] Submitted rotation is incorrect. Strike occurred.", moduleId);
         }
     }
+    public string TwitchHelpMessage = "Use '!{0} cw' to rotate clockwise! Use '!{0} ccw' to rotate counterclockwise! Use '!{0} submit' to press the submit button!";
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+		string commfinal=command.Replace("press ", "");
+		string[] digitstring = commfinal.Split(' ');
+		int tried;
+		foreach(string option in digitstring){
+			if(option=="cw"){
+				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; clockwise button pressed.", moduleId, option);
+				yield return clockwiseButton;
+			}
+			if(option=="ccw"){
+				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; counterclockwise button pressed.", moduleId, option);
+				yield return counterClockwiseButton;
+			}
+			if(option=="submit"){
+				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; submit button pressed.", moduleId, option);
+				yield return submitButton;
+			}
+			
+		}
+	}
 }
