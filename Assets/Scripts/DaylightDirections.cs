@@ -251,15 +251,15 @@ public class DaylightDirections : MonoBehaviour {
 		int tried;
 		foreach(string option in digitstring){
 			if(option=="cw"){
-				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; clockwise button pressed.", moduleId, command);
+				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays option {1} registered; clockwise button pressed.", moduleId, command);
 				yield return clockwiseButton;
 			}
 			if(option=="ccw"){
-				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; counterclockwise button pressed.", moduleId, command);
+				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays option {1} registered; counterclockwise button pressed.", moduleId, command);
 				yield return counterClockwiseButton;
 			}
 			if(option=="submit"){
-				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; submit button pressed.", moduleId, command);
+				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays option {1} registered; submit button pressed.", moduleId, command);
 				yield return submitButton;
 			}
 			
