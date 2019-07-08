@@ -243,7 +243,7 @@ public class DaylightDirections : MonoBehaviour {
             Debug.LogFormat(@"[Daylight Directions #{0}] Submitted rotation is incorrect. Strike occurred.", moduleId);
         }
     }
-    public string TwitchHelpMessage = "Use '!{0} cw' to rotate clockwise! Use '!{0} ccw!' tto rotate counterclockwise! Use '{0} submit' to press the submit button!";
+    public string TwitchHelpMessage = "Use '!{0} cw' to rotate clockwise! Use '!{0} ccw!' to rotate counterclockwise! Use '{0} submit' to press the submit button!";
     IEnumerator ProcessTwitchCommand(string command)
     {
 		string commfinal=command.Replace("press ", "");
