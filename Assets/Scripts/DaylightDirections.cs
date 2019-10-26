@@ -187,7 +187,7 @@ public class DaylightDirections : MonoBehaviour {
         if ((rightSunActive == 1 && !serialLastDigitEven) || (rightSunActive == 0 && serialLastDigitEven))
         {
             solutionRotation += 180;
-            Debug.LogFormat(@"[Daylight Directions #{0}] Sun conditions have flipped the orientation. Solution rotation is now {1} degrees.", moduleId, Mathf.Abs(360 - solutionRotation) % 360);
+            Debug.LogFormat(@"[Daylight Directions #{0}] Sun conditions have flipped the orientation. Solution rotation is now {1} degrees.", moduleId, 360 - (solutionRotation % 360));
         }
 
         //Material adjustments
@@ -195,30 +195,30 @@ public class DaylightDirections : MonoBehaviour {
         if (materialNumber == 1)
         {
             solutionRotation += 180;
-            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is blue, so it rotates 180 degrees. Final solution rotation is {1} degrees.", moduleId, Mathf.Abs(360 - solutionRotation) % 360);
+            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is blue, so it rotates 180 degrees. Final solution rotation is {1} degrees.", moduleId, 360 - (solutionRotation % 360));
         }
         //If the compass arrow is purple, rotate the direction 45 degrees clockwise
         else if (materialNumber == 4)
         {
             solutionRotation += 45;
-            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is purple, so it rotates 45 degrees clockwise. Final solution rotation is {1} degrees.", moduleId, Mathf.Abs(360 - solutionRotation) % 360);
+            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is purple, so it rotates 45 degrees clockwise. Final solution rotation is {1} degrees.", moduleId, 360 - (solutionRotation % 360));
         }
         //If the compass arrow is green, rotate the direction 135 degrees counterclockwise
         else if (materialNumber == 3)
         {
             solutionRotation += 225; //225 clockwise = 135 counterclockwise
-            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is green, so it rotates 135 degrees counterclockwise. Final solution rotation is {1} degrees.", moduleId, Mathf.Abs(360 - solutionRotation) % 360);
+            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is green, so it rotates 135 degrees counterclockwise. Final solution rotation is {1} degrees.", moduleId, 360 - (solutionRotation % 360));
         }
         //If the compass arrow is yellow, rotate the direction 90 degrees clockwise
         else if (materialNumber == 2)
         {
             solutionRotation += 90;
-            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is yellow, so it rotates 90 degrees clockwise. Final solution rotation is {1} degrees.", moduleId, Mathf.Abs(360 - solutionRotation) % 360);
+            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is yellow, so it rotates 90 degrees clockwise. Final solution rotation is {1} degrees.", moduleId, 360 - (solutionRotation % 360));
         }
         //Otherwise, don't adjust the direction at all
         else
         {
-            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is red, so no changes occur. Final solution rotation is {1} degrees.", moduleId, Mathf.Abs(360 - solutionRotation) % 360);
+            Debug.LogFormat(@"[Daylight Directions #{0}] Arrow is red, so no changes occur. Final solution rotation is {1} degrees.", moduleId, 360 - (solutionRotation % 360));
         }
         solutionRotation %= 360;
     }
