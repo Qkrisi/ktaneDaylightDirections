@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using KModkit;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Module made by hockeygoalie78
@@ -244,38 +245,57 @@ public class DaylightDirections : MonoBehaviour {
         }
     }
 
+    void NullableParse(string str, out int? i)
+    {
+        int n;
+        i = int.TryParse(str, out n) ? (int?)n : null;
+    }
+
     /// <summary>
     /// Twitch plays support created by Qkrisi
     /// </summary>
-    public string TwitchHelpMessage = "Use '!{0} cw' to rotate clockwise! Use '!{0} ccw' to rotate counterclockwise! Use '!{0} submit' to press the submit button!";
-    private readonly WaitForSeconds wait = new WaitForSeconds(0.1f);
+    private string TwitchHelpMessage = "Use '!{0} <button> <n>' to press a button n times! Button can be: cw, clockwise, ccw, counterclockwise, submit. By default, n is 1, maximum is 8.";
     IEnumerator ProcessTwitchCommand(string command)
     {
-		string commfinal=command.Replace("press ", "");
-		string[] digitstring = commfinal.Split(' ');
-		foreach(string option in digitstring){
+        var options = command.ToLowerInvariant().Split(' ');
+        string button = null;
+        int? t = null;
+        try
+        {
+            button = options[0];
+            NullableParse(options[1], out t);
+        }
+        catch(IndexOutOfRangeException) { }
+        if(t!=null && (t<1 || t>8))
+        {
             yield return null;
-			if(option=="cw")
-            {
-				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; clockwise button pressed.", moduleId, option);
-				yield return clockwiseButton;
-                yield return wait;
-                yield return clockwiseButton;
-            }
-			else if(option=="ccw")
-            {
-				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; counterclockwise button pressed.", moduleId, option);
-				yield return counterClockwiseButton;
-                yield return wait;
-                yield return counterClockwiseButton;
-            }
-			else if(option=="submit")
-            {
-				Debug.LogFormat(@"[Daylight Directions #{0}] Twitch plays command {1} registered; submit button pressed.", moduleId, option);
-				yield return submitButton;
-                yield return wait;
-                yield return submitButton;
-            }
-		}
-	}
+            yield return "sendtochaterror Number out of range";
+            yield break;
+        }
+        KMSelectable btn = null;
+        switch(button)
+        {
+            case "cw":
+            case "clockwise":
+                btn = clockwiseButton;
+                break;
+            case "ccw":
+            case "counterclockwise":
+                btn = counterClockwiseButton;
+                break;
+            case "submit":
+                btn = submitButton;
+                t = 1;
+                break;
+            default:
+                yield return null;
+                yield return "sendtochaterror Invalid button";
+                yield break;
+        }
+        for(int i = 0;i < (t == null ? 1 : t);i++)
+        {
+            yield return null;
+            btn.OnInteract();
+        }
+    }
 }
